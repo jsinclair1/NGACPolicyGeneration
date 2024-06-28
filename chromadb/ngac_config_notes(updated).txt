@@ -1,0 +1,259 @@
+
+The NGAC security model defines the conceptual framework for the specification of a wide range of access control policies. The security model is intended to facilitate the understanding and analysis of the properties afforded to protect resources. The security model is defined formally in terms of the mathematics of set theory and predicate calculus in consonance with the Z notation (see ZNOT). The formal specification allows the essential properties for the composition and working of NGAC to be statedfree from constraints on how the properties are achieved.
+
+
+The abstractions specified by the security model govern the operation of the NGAC Functional Architecture. The abstractions involve the elements, relations, and commands that are used to represent
+security policies and provide the basis for rendering access decisions. The types of abstractions that are defined herein are as follows:
+a) basic elements;
+b) relations;
+c) administrative commands; and
+d) access adjudication.
+
+
+Users need to be authenticated by an authentication service before they are activated. Details of user authentication are outside of the scope of this standard. A unique identifier (user ID) distinguishes each user within the system environment. NGAC users shall be represented by a finite set of user identifiers.
+
+
+Objects represent resources to which access is controlled. Resources can be logical or physical assets, such as files, messages, database records, printers, or network devices. A unique identifier (object ID) distinguishes each object within the system environment. NGAC objects shall be represented by a finite set of object identifiers.When an object is created, it is regarded as both an object and an object attribute by NGAC. That is, the identifier of the object may not only be treated as an object within NGAC relations but may also be treated as an object attribute based on its context within a relation.
+
+An access right denotes an authorizable unit or measure of authority in a defined security policy. One or more access rights are required to perform an operation. Each access right is represented by a unique
+identifier. Access rights shall be represented by a finite set of access right identifiers. One or more access rights are required to enable an operation to be carried out.
+
+
+A user attribute denotes an abstract user characteristic or property that is significant in determining authorization, such as organizational membership, geographic location, job function, or clearance level.
+Each user attribute is identified by a unique identifier. User attributes shall be represented by a finite set of user attribute identifiers.
+
+
+An object attribute denotes an abstract object characteristic or property that is significant in determining authorization, such as relative importance, sensitivity, geographic location, or resource type. Each object attribute is identified by a unique identifier. Object attributes shall be represented by a finite set of object attribute identifiers. Every member of the set O is, by definition, also a member of OA.
+
+
+A policy class denotes an affiliation of certain users, user attributes, objects, and object attributes to an access control policy. A policy class is identified by a unique identifier. Policy classes shall be represented by a finite set of policy class identifiers.
+
+
+NGAC relations fall into one of two categories: configured relations or derived relations. Configured relations represent relationships among basic elements, including sets of basic elements. Configured relations are persisted at the PIP and managed through administrative actions. Derived relations are calculated from configured relations and used to render an access control decision or conduct an administrative review of the authorization state. Since they are refinements of existing information already present in configured relations, derived relations are not treated as part of the authorization state. 
+
+
+The assignment relation defines linkages among policy elements which establish the attributes of users and objects. NGAC policy elements comprise all users, user attributes, object attributes (including all objects), and policy classes. The policy element set is defined as follows: PE = U ⋃ UA ⋃ OA ⋃ PC
+
+Policy element linkages denoted by assignments are directional. The first policy element of each assignment tuple is the direct ascendant of the second policy element, and the second policy element is the direct descendant of the first. A path is a sequence of policy elements in which each pair of consecutive policy elements in the sequence constitutes an assignment. Assignments between certain policy elements are also precluded, essentially distinguishing user and user attribute linkages from object and object attribute linkages.
+
+
+An object can be said to be “contained by” an object attribute if a path exists between the object and the object attribute. The Objects function represents the mapping from an object attribute to the set of objects that are contained by or denote that object attribute. Intuitively, the function Objects(oa) returns the set of objects that are contained by or possess the characteristics of the object attribute oa.
+
+
+The association relation defines an allocation of access rights among certain policy elements. Each association consists of an ordered triple of a user attribute, an access right set, and a user or object attribute. Members of an access right set are related for the purposes of access control. An access right set is identified by a unique identifier.
+
+The privilege relation is derived from the association and assignment relations. Each privilege is a triple of the form user, access right, and policy element whereby an association exists for each policy class containing the policy element, such that the following is true:
+a) The user is contained by the user attribute of the association;
+b) The policy element is contained by the attribute of the association;
+c) The attribute of the association is contained by the policy class; and
+d) The access right is a member of the access right set of the association.
+The privilege relation is a ternary relation from U to AR to PE\PC. 
+
+
+This standard specifies the architecture, security model, and interfaces of the NGAC framework at a level of detail necessary to ensure its realization in different types of implementation environments at a range
+of scalability levels. The standard also specifies key implementation aspects that enable functional entities within the architecture to operate in a correct, effective, cooperative, and accordant manner. Next Generation Access Control (NGAC) is a fundamental reworking of traditional access control into a form suited to the needs of the modern, distributed, interconnected enterprise. NGAC is based on a flexible infrastructure that can provide access control services for different types of resources, accessed by different types of applications and users. NGAC is designed to be scalable, support multiple policies simultaneously, and remain tractable in the face of changing technology, organizational restructuring, and increasing data volumes. Functional components of the reference architecture can be supported by products from different manufacturers. NGAC diverges from traditional approaches to access control in that it defines a generic architecture separate from any particular type of policy. NGAC is not an extension or adaption of any existing access control model, but rather a redefinition of access control in terms of a fundamental and reusable set of data abstractions and functions. NGAC provides a unifying framework capable of supporting not only current access control approaches but also novel types of policy that have been conceived yet never implemented due to the lack of a suitable means of expression and enforcement.
+
+
+NGAC follows an attribute-based construction in which characteristics or properties are used to control access to resources and to describe and manage policy. NGAC accommodates combinations of different policies and can support several types of policies concurrently in a manner that is both deterministic and manageable. NGAC is also suitable for applications in which some information is stored locally and some is stored in a grid or cloud, since different policies can be asserted in each context. Even more generally, NGAC supports situations in which policy determined by a central organization is able to operate concurrently with a local, specific, and more ad hoc policy.
+
+
+Least privilege is an established administrative practice of assigning users and processes the minimal authorization necessary for the performance of their job function. NGAC supports the concept of least privilege by allowing different authorizations for a user or its processes to become available at different times for the performance of different tasks. Processes acting for a user within the user’s session can be restricted to a subset of the user’s authorization, allowing them to be attenuated at a granularity below that of the user.
+
+This standard specifies the architecture, security model, and interfaces of the NGAC framework at a level of detail necessary to ensure its realization in different types of implementation environments at a range of scalability levels.
+
+Next Generation Access Control (NGAC) is a fundamental reworking of traditional access controls to meet the needs of the modern, distributed, and interconnected enterprise. NGAC provides a unifying framework
+capable of supporting both current and novel types of access control policies simultaneously. It also defines access control in terms of a fundamental and reusable set of data abstractions and functions,
+following an attribute-based access control model in which authorizations are defined in terms of attributes. Security-relevant properties of users, processes, and objects (e.g., role, sensitivity, affiliation, and class), and also of the computational environment (e.g., time of day and threat level) can be expressed as attributes.
+
+Next Generation Access Control (NGAC) is a reinvention of traditional access control into a form that suits the needs of the modern, distributed, interconnected enterprise. NGAC is designed to be scalable, support a wide range of access control policies, enforce different types of policies simultaneously, provide access control services for different types of resources, and remain manageable in the face change.
+
+NGAC follows an attribute-based construction in which characteristics or properties are used to control access to resources and to describe and manage policy. This standard specifies the architecture, security model, and interfaces of the NGAC framework necessary to ensure its realization in different types of implementation environments at a range of scalability levels and to obtain the requisite level of cohesion and functionality to operate correctly and effectively at the system level.
+
+
+Definitions
+
+Foundational terms:
+
+Real system - A set of one or more computers, associated software, peripheral equipment, terminals, human operators,
+physical processes, and means of communication that form an autonomous whole capable of performing
+information processing or information transfer or both.
+
+
+Resource - An accessible unit of data, services, components, or other logical or physical assets of a real system.
+
+Access control - The prevention of the unsanctioned use of resources, including their use in an unwarranted manner.
+
+System environment - An abstraction of the real system.
+
+Entity - Something that exists and can be identified within a system environment.
+
+Identifier - A descriptor that unambiguously distinguishes an entity from other entities.
+
+Policy - A set of criteria that governs the behavior of entities within a system environment.
+
+Security model - A formal description of the properties required of a system environment to mediate access as dictated by
+policy.
+
+Policy information - A distinct, distinguishable aspect of policy.
+
+Authorization - An allocation of authority to entities by way of policy which enables one or more modes of access.
+
+Authorization state - The current authorization based on the prevailing policy.
+
+Authorized - Explicitly allowed through authorization.
+
+
+
+Basic policy-oriented terms
+
+Policy entity - An entity that is used to depict an item or detail of policy.
+
+User - A policy entity that represents a distinct functional capacity in a real system, which is customarily ascribed to a human being.
+
+Object - A policy entity that represents a resource.
+
+User attribute - A policy entity that represents a characteristic or property of a user.
+
+Object attribute - A policy entity that represents a characteristic or property of an object.
+
+Policy class - A policy entity that characterizes the users, objects, user attributes, and object attributes associated with a policy or some aspect of a policy.
+
+Attribute - A designator that represents either a user attribute or an object attribute.
+
+Container - A designator that represents either an attribute or a policy class.
+
+Policy element - A designator that represents any of the following policy entities: user, object, user attribute, object attribute, or policy class.
+
+Access right - A policy entity that denotes a unit or measure of authority suitable for authorization.
+
+Access right set - A policy entity that represents a group of selected access rights.
+
+Operation - A policy entity that denotes a mode of access to an object or policy information.
+
+
+Advanced policy-oriented terms
+
+Configured relation - A component of policy that describes a significant relationship among policy entities.
+
+Assignment relation - A configured relation that defines a structural ordering of policy elements.
+
+Assignment - A member of the assignment relation, which denotes an ordering or directional link between two policy elements, from the first policy element to the second.
+
+Path - A sequence of policy elements in which every pair of consecutive policy elements in the sequence constitutes an assignment.
+
+Path length - The number of policy elements in the path minus one.
+
+Containment - A relationship between two policy elements in which a path exists from the first policy element
+to the second.
+
+Ascendant - A policy element that is on a path leading to another policy element.
+
+Immediate ascendant - An ascendant whose path length is one.
+
+Descendant - A policy element that is on a path originating from another policy element.
+
+Immediate descendant - A descendant whose path length is one.
+
+Referent - An attribute that is used in a configured relation as a designator for itself and all of its ascendants.
+
+Attribute set - A policy entity that represents a group of like referents (i.e., all object attributes or user attributes.
+
+
+
+A representation of the assignment relation as a directed graph in which each policy element is a node of the graph, and each assignment is a directed edge between policy elements.
+
+
+Association relation - A configured relation that defines an allocation of access rights among policy elements that enables certain modes of access.
+
+Association - A member of the association relation, which represents a specific aspect of the access rights asserted among policy elements.
+
+Prohibition relation - A configured relation that defines an allocation of access rights among policy elements that disables certain modes of access.
+
+Prohibition - A member of the prohibition relation, which represents a specific aspect of the access rights suppressed among policy elements.
+
+Obligation relation - A configured relation that defines conditions under which policy needs to be dynamically altered on behalf of a user due to an event occurrence.
+
+Event response - A policy entity that specifies preconceived adjustments to policy.
+
+Event pattern - A policy entity that specifies the conditions under which an associated event response needs to be carried out.
+
+Obligation - A member of the obligation relation, which associates an event pattern and event response with the
+defining user 
+
+Derived relation - A relationship that is defined in terms of one or more configured relations.
+
+Privilege relation - A derived relation in which each member denotes an access right (3.1.2.10) that a policy element holds for a policy element.
+
+Restriction relation - A derived relation in which each member denotes an access right that a policy element may hold for a policy element but cannot utilize.
+
+
+Functionally oriented terms
+Trusted entity - An entity in which confidence exists that it can be relied upon to behave as expected.
+
+Functional entity - A trusted entity that participates in enabling, maintaining, and upholding policy.
+
+Functional architecture - A reference model that specifies the way in which functional entities regard one another and act jointly toward a common purpose (viz., access control.
+
+Access attempt - A mode of access initiated by a process, which pertains to an object or policy information.
+
+Access request - Detailed information about a pending access attempt.
+
+Access decision - A determination of whether the modes of access of an access request or an event response comply with the authorization state.
+
+Event context - Detailed information about a successfully completed access request.
+
+
+Keywords
+Mandatory: A keyword indicating an item that is required to be implemented as defined in this standard to claim compliance with this standard.
+
+May: A keyword that indicates flexibility of choice with no implied preference.
+
+Optional: A keyword that describes features that are not required to be implemented by this standard. However, if any optional feature defined by this standard is implemented, it shall be implemented as defined in this standard.
+
+Shall: A keyword indicating a mandatory requirement. All such requirements are required to be implemented to ensure conformance with this standard.
+
+Should: A keyword indicating flexibility of choice with a preferred alternative; equivalent to the phrase “it is recommended”.
+
+Certain words and terms used in this American National Standard have a specific meaning beyond the common English meaning. These words and terms are defined either in clause 3 or in the text where they first appear. A numeric list of items (e.g., 1, 2, 3) indicates the items in the list are ordered (i.e., item 1 shall occur or complete before item 2).
+
+
+In the event of conflicting information, the precedence for requirements defined in this standard is as
+follows:
+1) mathematical notation;
+2) text;
+3) tables; and
+4) figures.
+The NGAC Functional Architecture (FA) can be viewed as a conceptual model of the basic processing functionality and interactions for access control. It identifies key functional components and their relationships to each other and serves as a template for the characteristics required of a conformant implementation. The functional architecture can be implemented in a number of ways, and it allows different types of access control schemes to be realized using a common set of services.
+
+
+
+The first two information flows listed above correspond respectively to the two kinds of accesses supported by NGAC: resource access and administration access. A resource access is the only means by which users may gain access to resources governed by NGAC. Similarly, an administration access is the only means by which users may gain access to policy information. The third information flow, an event context flow, applies only to a system for which an EPP is present and is a concomitant of a successful resource or administration access.
+
+A resource access is the only way by which users shall gain access to resources. An administration access is the only way by which users shall gain access to policy information. A user may be associated with one or more processes, while a process shall be associated with just one user. Requests from a user’s process to access resources or policy information need to be submitted under an established session. A user shall not have more than one session active at any time. An authenticated user shall establish a session with a PEP prior to any of its processes submitting an access request. All of a user’s processes shall use the PEP to which the user has formed a session to access resources or policy information.
+
+
+To determine whether an access request can be granted, the access decision function requires a mapping from the operation to the sequence of possible access right sets that the process’s user needs to hold over the arguments of the operation.
+
+The NGAC security model is specified utilizing a single data store in which the policy is maintained, and modifications to the policy take immediate effect. While the model captures the required behavior of
+applied policy updates, it does not address the more general issue of ensuring that the updates are of high-caliber. Because updates have a direct impact on the results of the access decision function, it
+would be useful to provide one or more means to vet intended updates before they are applied to the active policy.
+
+A policy management application can be an important tool in understanding policy abstractions and the impact that policy settings have on controlling behavior. A policy management tool should be able to
+screen proposed changes before they are applied to verify that they are well-formed and do not produce inconstancies in the policy. Graphical renditions are an effective aid in comprehending and administering
+policy for which NGAC is well-suited.
+
+Establishing separate, distinct spaces for creating and testing policy revisions before they are activated can also prove useful in practice. For example, two policy stores could be maintained: one for the test policy and one for the active policy. The active policy store is used to compute runtime access decisions, while the test policy store is used to apply revisions to a copy of the active policy for vetting. Once vetting
+of a test policy is complete, it can replace the active policy. Some means would also need to be established to transition the test policy to the active policy in a synchronized fashion that avoids disrupting operations.
+
+
+
+User specification: If the user specification is present, it denotes the processes of a specific user, any user, or any user from a set of users and/or user attributes, or a specific process specified through its identifier. If the user specification is omitted, then any event matches this component of the pattern by default.
+
+
+Policy element specification: If the policy element specification is present, it can specify a policy element by its name, any policy element, any policy elements contained in other policy elements, or any policy element from a set of enumerated policy elements.
+
+
+Policy class specification: The policy class specification, if present, can specify a particular policy class by name, any policy class, any policy class from a set, all policy classes, or all policy classes from a set. The current event matches the policy class specification if the user is contained in the designated policy classes. If the policy class is omitted, any event matches this component of the pattern.
+
+
+Operation specification: The mandatory operation specification specifies the event operation by its name, as any operation, or as any operation from a set of operations.
