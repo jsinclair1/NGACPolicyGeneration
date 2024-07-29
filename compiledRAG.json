@@ -1,0 +1,57 @@
+{
+  "refine_prompt": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "configuration_description": "On college campuses, several only particular faculty members are eligible to create a\nproposal, called PDSWhole. Only Research Faculty, Tenured Track Faculty, and Tenured\nFaculty can create proposals and are eligible to be PI, CoPI, and SP of the proposal.\nAdjunct Faculties can only be SP, Clinical and Teaching faculty can be CoPI. Bob and\nMichelle are Adjunct Faculties, Ashley is Research Faculty, David and Dorothy are Tenured\nTrack Faculty, Jessica is Tenured faculty",
+        "rationale": "produce the optimized paragraph. We need to describe the access control policy for creating proposals on college campuses. We should mention the specific faculty members who are eligible to create proposals and the roles they can have in the proposal. Additionally, we need to include the different types of faculty and their corresponding roles in the proposal. Finally, we should mention the names of the faculty members involved in this scenario.",
+        "optimized_paragraph": "On college campuses, only certain faculty members have the ability to create proposals called PDSWhole. The eligible faculty members who can create proposals and hold specific roles in the proposal are Research Faculty, Tenured Track Faculty, and Tenured Faculty. Research Faculty, such as Ashley, can be Principal Investigators (PI), Co-Principal Investigators (Co"
+      },
+      {
+        "augmented": true,
+        "configuration_description": "In an IT company, different users have different permissions on several objects. Quality\nAssurance workers can print objects from UserDatabase; Cloud Specialists can move\nobjects in User Database. Cyber Security Experts can archive System Log objects.",
+        "rationale": "produce the optimized paragraph. We have different users with different permissions on various objects. Quality Assurance workers can print objects from UserDatabase, Cloud Specialists can move objects in User Database, and Cyber Security Experts can archive System Log objects.",
+        "optimized_paragraph": "In an IT company, there are different levels of access control for users based on their roles. Quality Assurance workers have permission to print objects from the UserDatabase. Cloud Specialists have the ability to move objects within the User Database. Cyber Security Experts are authorized to archive System Log objects."
+      }
+    ],
+    "signature_instructions": "Rewrite the given access control policy description to be easily understood while maintaining all information and logic. ",
+    "signature_prefix": "Optimized Paragraph:",
+    "extended_signature_instructions": "Rewrite the given access control policy description to be easily understood while maintaining all information and logic. ",
+    "extended_signature_prefix": "Optimized Paragraph:"
+  },
+  "generate_answer": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "natural_language_description": "On college campuses, only certain faculty members have the ability to create proposals called PDSWhole. The eligible faculty members who can create proposals and hold specific roles in the proposal are Research Faculty, Tenured Track Faculty, and Tenured Faculty. Research Faculty, such as Ashley, can be Principal Investigators (PI), Co-Principal Investigators (Co",
+        "context": [
+          "Shall: A keyword indicating a mandatory requirement. All such requirements are required to be implemented to ensure conformance with this standard.",
+          "Authorized - Explicitly allowed through authorization.",
+          "\nAssociation relation - A configured relation that defines an allocation of access rights among policy elements that enables certain modes of access."
+        ],
+        "PML_statements": "create policy class \"collegecampus\";\ncreate user attribute \"ResearchFaculty\" in [\"collegecampus\"];\ncreate user attribute \"TenuredTrackFaculty\" in [\"collegecampus\"];\ncreate user attribute \"TenuredFaculty\" in [\"collegecampus\"];\ncreate object attribute \"PDSWhole\" in [\"collegecampus\"];\nassign \"ResearchFaculty\" to [\"TenuredTrackFaculty\", \"TenuredFaculty\"];\ncreate user \"Ashley\" in [\"ResearchFaculty\"];\nassociate \"ResearchFaculty\" and \"PDSWhole\" with [\"CreateProposal\"];\nassociate \"TenuredTrackFaculty\" and \"PDSWhole\" with [\"CreateProposal\"];\nassociate \"TenuredFaculty\" and \"PDSWhole\" with [\"CreateProposal\"];"
+      },
+      {
+        "augmented": true,
+        "natural_language_description": "In an IT company, there are different levels of access control for users based on their roles. Quality Assurance workers have permission to print objects from the UserDatabase. Cloud Specialists have the ability to move objects within the User Database. Cyber Security Experts are authorized to archive System Log objects.",
+        "context": [
+          "A resource access is the only way by which users shall gain access to resources. An administration access is the only way by which users shall gain access to policy information. A user may be associated with one or more processes, while a process shall be associated with just one user. Requests from a user\u2019s process to access resources or policy information need to be submitted under an established session. A user shall not have more than one session active at any time. An authenticated user shall establish a session with a PEP prior to any of its processes submitting an access request. All of a user\u2019s processes shall use the PEP to which the user has formed a session to access resources or policy information.",
+          "\nLeast privilege is an established administrative practice of assigning users and processes the minimal authorization necessary for the performance of their job function. NGAC supports the concept of least privilege by allowing different authorizations for a user or its processes to become available at different times for the performance of different tasks. Processes acting for a user within the user\u2019s session can be restricted to a subset of the user\u2019s authorization, allowing them to be attenuated at a granularity below that of the user.",
+          "Next Generation Access Control (NGAC) is a fundamental reworking of traditional access controls to meet the needs of the modern, distributed, and interconnected enterprise. NGAC provides a unifying framework\ncapable of supporting both current and novel types of access control policies simultaneously. It also defines access control in terms of a fundamental and reusable set of data abstractions and functions,\nfollowing an attribute-based access control model in which authorizations are defined in terms of attributes. Security-relevant properties of users, processes, and objects (e.g., role, sensitivity, affiliation, and class), and also of the computational environment (e.g., time of day and threat level) can be expressed as attributes."
+        ],
+        "PML_statements": "create policy class \"ITCompanyAccessControl\";\n\ncreate user attribute \"QualityAssuranceWorker\" in [\"ITCompanyAccessControl\"];\ncreate user attribute \"CloudSpecialist\" in [\"ITCompanyAccessControl\"];\ncreate user attribute \"CyberSecurityExpert\" in [\"ITCompanyAccessControl\"];\n\ncreate object attribute \"UserDatabase\" in [\"ITCompanyAccessControl\"];\ncreate object attribute \"SystemLog\" in [\"ITCompanyAccessControl\"];\n\nassign \"QualityAssuranceWorker\" to [\"CloudSpecialist\"];\nassign \"CloudSpecialist\" to [\"CyberSecurityExpert\"];\n\ncreate user \"user1\" in [\"QualityAssuranceWorker\"];\ncreate user \"user2\" in [\"CloudSpecialist\"];\ncreate user \"user3\" in [\"CyberSecurityExpert\"];\n\nassociate \""
+      }
+    ],
+    "signature_instructions": "Generate the following access control policy configuration for the Policy Class using Policy Machine Language (PML). Ensure to create all provided users and user attributes by name encapsulate their access rights.\nPolicy Machine Language(PML) statement format : \n                          create policy class \"policyclass1\"; - creates policy class \"policyclass1\" for all elements to be contained in - usually incapsulates all the elements of the policy;\n                          create user attribute \"userattribute1\" in [\"pc1\"]; - creates user attribute \"userattribute1\" in policy class \"pc1\";\n                          create object attribute \"objectattribute1\" in [\"pc1\"]; - creates object attribute \"objectattribute1\" in policy class \"pc1\";\n                          assign \"userattribute1\" to [\"userattribute2\"]; - assigns \"userattribute1\" to \"userattribute2\". The permissions of \"userattribute2\" are inherited by \"userattribute1\";\n                          create user \"user1\" in [\"userattribute1\" \"userattribute2\"]; - creates user \"user1\" with attributes \"userattribute1\" and \"userattribute2\";\n                          associate \"userattribute1\" and \"objectattribute1\" with [\"accessright1\" \"accessright2\"]; - permits any user with \"userattribute1\" access \"accessright1\" and \"accessright2\" on \"objectattribute1\";\n                                      ",
+    "signature_prefix": "PML Statements:"
+  },
+  "retrieve": {
+    "k": 3
+  }
+}
